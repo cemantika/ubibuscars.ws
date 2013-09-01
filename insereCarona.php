@@ -9,15 +9,21 @@ $enderecoOrigem = $_POST["enderecoOrigem"];
 $enderecoDestino = $_POST["enderecoDestino"];
 $horarioOrigem = $_POST["horarioOrigem"];
 $horarioDestino = $_POST["horarioDestino"];
+$vagas = (int) $_POST["vagas"];
 $tipo = $_POST["tipo"]; 
 $data= date('Y-m-d H:i:s');
 
 
-$query = "INSERT INTO caronas (id_usuario,id_parada_origem,id_parada_destino,endereco_origem,horario_origem,endereco_destino,horario_destino,tipo,data) VALUES ($id_usuario,$id_pontoOrigem,$id_pontoDestino,'$enderecoOrigem','$horarioOrigem','$enderecoDestino', '$horarioDestino',$tipo,'$data')";
+$query = "
+	INSERT INTO caronas
+		(id_usuario,id_parada_origem,id_parada_destino,endereco_origem,horario_origem,endereco_destino,horario_destino,tipo,data, vagas)
+	VALUES
+		($id_usuario,$id_pontoOrigem,$id_pontoDestino,
+		'$enderecoOrigem','$horarioOrigem','$enderecoDestino', '$horarioDestino',$tipo,'$data', $vagas)";
 
 pg_query($con,$query) or die ("Erro ao inserir dados");
 
-echo "Carona cadastrada com sucesso";
+echo "Carona cadastrada com sucesso.";
 
 pg_close();
 
