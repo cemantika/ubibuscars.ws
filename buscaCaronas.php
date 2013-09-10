@@ -41,7 +41,7 @@ $linhas = array();
 
 while($r = pg_fetch_assoc($result))
 {
-	$r['vagas_disponiveis'] = strval(isset($vagasOcupadasPorCarona[$r['id_carona']]) ? $r['vagas'] - $vagasOcupadasPorCarona[$r['id_carona']] : $r['vagas']);
+	$r['vagas_disponiveis'] = ($r['tipo'] == 1) ? strval(isset($vagasOcupadasPorCarona[$r['id_carona']]) ? $r['vagas'] - $vagasOcupadasPorCarona[$r['id_carona']] : $r['vagas']) : '';
 	$linhas[] = $r;
 }
 
