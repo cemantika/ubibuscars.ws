@@ -17,5 +17,7 @@ pg_query($con,$query) or die ("Erro ao inserir dados".pg_last_error());
 
 echo "Alerta enviado com sucesso";
 
+
+
 pg_close();
 ?>
