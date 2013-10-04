@@ -25,15 +25,52 @@ function getVagasOcupadasPorCarona() {
 }
 
 $query = 
-"SELECT
-	u.nome_usuario
-AS
-	nome, c.id_carona, c.id_usuario,c.endereco_origem,c.horario_origem,c.endereco_destino,c.horario_destino, c.tipo,c.ativo, c.vagas
+"SELECT 
+	u.nome_usuario as nome,
+	j.id_carona, 
+	j.id_usuario,
+	j.endereco_origem,
+	j.horario_origem,
+	j.endereco_destino,
+	j.horario_destino, 
+	j.tipo,
+	j.ativo, 
+	j.vagas,
+	j.nota
+FROM 
+
+(
+SELECT
+	c.id_carona, 
+	c.id_usuario,
+	c.endereco_origem,
+	c.horario_origem,
+	c.endereco_destino,
+	c.horario_destino, 
+	c.tipo,
+	c.ativo, 
+	c.vagas,
+	(avg(a.nota)) as nota
+	 
 FROM
-	caronas AS c INNER JOIN usuarios AS u ON (c.id_usuario=u.id_usuario) ORDER BY c.id_carona DESC"; 
+	caronas AS c
+
+LEFT JOIN  
+	avaliacao AS a 
+USING 
+	(id_carona)
+
+GROUP BY
+	id_carona
+
+ORDER BY c.id_carona DESC
+) as j
+
+INNER JOIN usuarios AS u ON (j.id_usuario=u.id_usuario)"; 
 
 $result = pg_query($query) or die ("Erro ao buscar dados");
 $vagasOcupadasPorCarona = getVagasOcupadasPorCarona();
+
 
 pg_close();
 
